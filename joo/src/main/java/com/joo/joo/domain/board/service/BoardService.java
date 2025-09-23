@@ -27,6 +27,8 @@ public class BoardService {
                 .orElse(null);
     }
 
+
+
     public BoardResponse save(CreateBoardRequest request) {
         Board board = Board.builder()
                 .title(request.getTitle())
@@ -35,6 +37,7 @@ public class BoardService {
                 .build();
 
         Board saved = boardRepository.save(board);
+
 
         return BoardResponse.builder()
                 .id(saved.getId())
@@ -46,6 +49,8 @@ public class BoardService {
     public void delete(Long id) {
         boardRepository.deleteById(id);
     }
+
+
 
     private BoardResponse convertToDTO(Board board) {
         return BoardResponse.builder()
