@@ -64,4 +64,10 @@ public class User {
         VICE_PRESIDENT, // 부회장
         PRESIDENT       // 회장
     }
+    @PrePersist
+    public void prePersist() {
+        if (seedCnt == null) seedCnt = 0;
+        if (yearFruit == null) yearFruit = 0;
+        if (position == null) position = Position.INTERN; // 기본값 의미 있으면
+    }
 }

@@ -1,13 +1,10 @@
 package com.joo.joo.domain.user.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Table;
 import lombok.*;
 
 @Getter
 @Setter
-@Table(name = "users")
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

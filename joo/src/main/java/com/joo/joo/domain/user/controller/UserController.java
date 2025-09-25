@@ -6,11 +6,11 @@ import com.joo.joo.domain.user.dto.response.UserResponse;
 import com.joo.joo.domain.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,7 +52,7 @@ public class UserController {
 
     @PostMapping("/me")
     @Operation(summary = "내 정보 조회")
-    public UserResponse getUserByUserId(@RequestParam Long userId) {
-        return userService.getUserByUserId(userId);
+    public UserResponse getUserByUserId(HttpServletRequest request) {
+        return userService.getUserByUserId(request);
     }
 }
