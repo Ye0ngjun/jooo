@@ -1,4 +1,4 @@
-package com.joo.joo.domain.auth.jwt;
+package com.joo.joo.domain.user.jwt;
 
 import com.joo.joo.global.config.JwtProperties;
 import io.jsonwebtoken.JwtException;
@@ -20,18 +20,34 @@ public class JwtTokenProvider {
         return Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes(StandardCharsets.UTF_8));
     }
 
-    // JWT 토큰 생성
-    public String generateToken(String email) {
+    // Access Token
+    public String generateAccessToken(String email) {
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + jwtProperties.getTokenValidity());
+        Date expiryDate = new Date(now.getTime() + 1000 * 60 * 15); // 15분
 
         return Jwts.builder()
-                .setSubject(email)                // 토큰 제목(subject)에 이메일 넣기
-                .setIssuedAt(now)                 // 발급 시간
-                .setExpiration(expiryDate)       // 만료 시간
+                .setSubject(email)
+                .claim("type", "access") // ✅ 토큰 타입 구분
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
+    // Refresh Token
+    public String generateRefreshToken(String email) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + 1000L * 60 * 60 * 24 * 7); // 7일
+
+        return Jwts.builder()
+                .setSubject(email)
+                .claim("type", "refresh") // ✅ 토큰 타입 구분
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
 
     // JWT 토큰에서 이메일 추출
     public String getEmailFromToken(String token) {

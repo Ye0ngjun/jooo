@@ -39,7 +39,7 @@ public class BoardController {
         return boardService.save(request);
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}")
     @Operation(summary = "게시글 삭제")
     public ResponseEntity<String> deleteBoard(@PathVariable Long id) {
         boardService.delete(id);
