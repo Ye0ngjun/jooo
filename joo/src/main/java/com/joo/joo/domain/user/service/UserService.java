@@ -37,7 +37,7 @@ public class UserService {
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .empNum(request.getEmpNum())
+                .empNum(Integer.valueOf(request.getEmpNum()))
                 .phoneNum(request.getPhoneNum())
                 .birth(LocalDate.parse(request.getBirth(), formatter))
                 .deptId(1L)

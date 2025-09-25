@@ -1,6 +1,7 @@
 package com.joo.joo.domain.user.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Getter
@@ -20,12 +21,15 @@ public class CreateUserRequest {
     @Schema(description = "비밀번호", example = "f1234")
     private String password;
 
-    @Schema(description = "사번", example = "12341234")
-    private Integer empNum;
+    @NotBlank(message = "사번은 필수 입력 값입니다.")
+    @Schema(description = "사번", example = "01234567")
+    private String empNum;
 
     @Schema(description = "전화번호", example = "01012341234")
     private String phoneNum;
 
-    @Schema(description = "생년월일", example = "19900101")
+    @Schema(description = "생년월일", example = "1990-01-01")
     private String birth;
+
+
 }

@@ -19,7 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // bigint auto_increment라면
     private Long userId;
 
-    @Column(name = "dept_id", nullable = false)
+    @Column(name = "dept_id", nullable = true)
     private Long deptId;
 
 //    @ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -13,6 +13,7 @@ import lombok.Setter;
 public class LoginRequest {
     @NotNull
     @Schema(description = "사번", example = "12341234")
+
     private Integer empNum;
 
     @NotNull

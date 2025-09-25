@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +33,13 @@ public class UserController {
 
     @PostMapping("/login")
     @Operation(summary = "로그인")
-    public ResponseEntity<String> login(@RequestBody LoginRequest request, HttpServletResponse response) {
-        String message = userService.login(request, response);
-        return ResponseEntity.ok(message); // 로그인은 보통 200 OK
+    public ResponseEntity<String> login(
+            @Valid @RequestBody LoginRequest request,
+            HttpServletResponse response
+    ) {
+        return ResponseEntity.ok(userService.login(request, response));
     }
+
     @PostMapping("/logout")
     @Operation(summary = "로그아웃")
     public ResponseEntity<String> logout(HttpServletResponse response) {
