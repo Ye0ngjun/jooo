@@ -1,16 +1,18 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   datasource:
-    url: jdbc:mysql://localhost:3306/jooroot?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 1234
+    url: ${DB_URL}
+    driver-class-name: ${DB_DRIVER}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   jpa:
     hibernate:
-      ddl-auto: update   # 개발할 땐 update, 운영은 validate 권장
+      ddl-auto: update
     show-sql: true
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: ${DB_PLATFORM}
 
 jwt:
-  secret: wndudwnswndudwnswndudwnswndudwnswndudwns
-  token-validity: 3600000
+  secret: ${JWT_SECRET}
+  token-validity: ${JWT_TOKEN_VALIDITY}
