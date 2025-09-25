@@ -37,7 +37,7 @@ public class UserService {
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .empNum(Integer.valueOf(request.getEmpNum()))
+                .empNum(request.getEmpNum())
                 .phoneNum(request.getPhoneNum())
                 .birth(LocalDate.parse(request.getBirth(), formatter))
                 .deptId(1L)
@@ -122,7 +122,7 @@ public class UserService {
                         .email(user.getEmail())
                         .phoneNum(user.getPhoneNum())
                         .position(user.getPosition().name())
-                        .empNum(user.getEmpNum())
+                        .empNum(Integer.valueOf(user.getEmpNum()))
                         .birth(String.valueOf(user.getBirth()))
                         .build())
                 .toList();
@@ -149,7 +149,7 @@ public class UserService {
                 .email(user.getEmail())
                 .phoneNum(user.getPhoneNum())
                 .position(user.getPosition().name())
-                .empNum(user.getEmpNum())
+                .empNum(Integer.valueOf(user.getEmpNum()))
                 .birth(String.valueOf(user.getBirth()))
                 .build();
     }
