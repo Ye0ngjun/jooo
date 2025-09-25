@@ -26,8 +26,8 @@ public class User {
 //    @JoinColumn(name = "dept_id", nullable = false)
 //    private Dept dept;
 
-    @Column(name = "emp_num", nullable = false, unique = true)
-    private Integer empNum;
+    @Column(name = "emp_num", nullable = false, unique = true, length = 8)
+    private String empNum;
 
     @Column(name = "password", nullable = false, length = 225)
     private String password;

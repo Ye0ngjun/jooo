@@ -26,7 +26,7 @@ public class UserController {
 
     @PostMapping
     @Operation(summary = "회원가입")
-    public ResponseEntity<String> createUser(@RequestBody CreateUserRequest request) {
+    public ResponseEntity<String> createUser(@Valid @RequestBody CreateUserRequest request) {
         String message = userService.createUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
