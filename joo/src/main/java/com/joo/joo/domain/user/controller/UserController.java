@@ -48,13 +48,13 @@ public class UserController {
     }
 
 
-    @PostMapping("/all")
+    @GetMapping("/all")
     @Operation(summary = "모든 유저 조회")
     public List<UserResponse> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @PostMapping("/me")
+    @GetMapping("/me")
     @Operation(summary = "내 정보 조회")
     public UserResponse getUserByUserId(HttpServletRequest request) {
         return userService.getUserByUserId(request);
