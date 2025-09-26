@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @Service
@@ -32,6 +33,14 @@ public class UserService {
 
     public String createUser(CreateUserRequest request) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        // 중복 체크
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "이미 등록된 이메일입니다.");
+        }
+        if (userRepository.findByEmpNum(request.getEmpNum()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "이미 등록된 사번입니다.");
+        }
+
 
         User user = User.builder()
                 .name(request.getName())
@@ -122,7 +131,7 @@ public class UserService {
                         .email(user.getEmail())
                         .phoneNum(user.getPhoneNum())
                         .position(user.getPosition().name())
-                        .empNum(Integer.valueOf(user.getEmpNum()))
+                        .empNum(user.getEmpNum())
                         .birth(String.valueOf(user.getBirth()))
                         .build())
                 .toList();
@@ -131,12 +140,17 @@ public class UserService {
     public UserResponse getUserByUserId(HttpServletRequest request) {
         // 1. 쿠키에서 access_token 추출
         String token = extractTokenFromCookie(request);
-        if (token == null) {
+        if (token == null || token.isBlank()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "토큰이 없습니다.");
         }
 
         // 2. 토큰에서 email 추출 (JwtTokenProvider 안에 getEmailFromToken 같은 메소드 만들어두면 좋아요)
-        String email = jwtTokenProvider.getEmailFromToken(token);
+        String email;
+        try {
+            email = jwtTokenProvider.getEmailFromToken(token);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "유효하지 않은 또는 만료된 토큰입니다.");
+        }
 
         // 3. DB 조회
         User user = userRepository.findByEmail(email)
@@ -149,7 +163,7 @@ public class UserService {
                 .email(user.getEmail())
                 .phoneNum(user.getPhoneNum())
                 .position(user.getPosition().name())
-                .empNum(Integer.valueOf(user.getEmpNum()))
+                .empNum(user.getEmpNum())
                 .birth(String.valueOf(user.getBirth()))
                 .build();
     }

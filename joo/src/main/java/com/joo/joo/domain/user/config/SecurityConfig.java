@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 public class SecurityConfig {
@@ -27,7 +28,9 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form.permitAll()) // 🔓 기본 로그인 폼 사용
                 .logout(logout -> logout.permitAll()) // 🔓 로그아웃 허용
-                .csrf(csrf -> csrf.disable()) // 👉 테스트용으로 CSRF 비활성화
+                .csrf(csrf -> csrf
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                )
                 .headers(headers -> headers.frameOptions().sameOrigin());
 
         return http.build();

@@ -23,7 +23,7 @@ public class CreateUserRequest {
 
     @NotBlank(message = "사번은 필수 입력 값입니다.")
     @Schema(description = "사번", example = "01234567")
-    private String empNum;
+    private Integer empNum;
 
     @Schema(description = "전화번호", example = "01012341234")
     private String phoneNum;
