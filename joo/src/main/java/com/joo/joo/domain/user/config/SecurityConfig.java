@@ -29,7 +29,10 @@ public class SecurityConfig {
                 .formLogin(form -> form.permitAll()) // 🔓 기본 로그인 폼 사용
                 .logout(logout -> logout.permitAll()) // 🔓 로그아웃 허용
                 .csrf(csrf -> csrf
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                                .disable()
+//                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                        .ignoringRequestMatchers("/h2-console/**")
+
                 )
                 .headers(headers -> headers.frameOptions().sameOrigin());
 
