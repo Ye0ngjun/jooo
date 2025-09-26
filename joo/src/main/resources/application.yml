@@ -1,17 +1,18 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true
+    url: ${DB_URL}
+    driver-class-name: ${DB_DRIVER}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    database-platform: ${DB_PLATFORM}
 
 jwt:
-  secret: wndudwnswndudwnswndudwnswndudwnswndudwns
-  token-validity: 3600000
+  secret: ${JWT_SECRET}
+  token-validity: ${JWT_TOKEN_VALIDITY}

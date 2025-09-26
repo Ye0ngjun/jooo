@@ -17,6 +17,7 @@ import java.util.List;
 @Tag(name = "Board", description = "게시판 API")
 public class BoardController {
 
+
     private final BoardService boardService;
 
     @GetMapping
@@ -24,6 +25,7 @@ public class BoardController {
     public List<BoardResponse> getAllBoards() {
         return boardService.findAll();
     }
+
 
     @GetMapping("/{id}")
     @Operation(summary = "게시글 ID로 조회")
@@ -37,7 +39,7 @@ public class BoardController {
         return boardService.save(request);
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}")
     @Operation(summary = "게시글 삭제")
     public ResponseEntity<String> deleteBoard(@PathVariable Long id) {
         boardService.delete(id);
